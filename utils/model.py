@@ -74,7 +74,7 @@ def calculate_mape(actual, prediction):
 def calcuate_nmbe(actual, prediction):
     actual = np.array(actual)
     prediction = np.array(prediction)
-    return np.sum(actual - prediction) / np.sum(actual) * 100
+    return np.sum(prediction - actual) / np.sum(actual) * 100
 
 
 
