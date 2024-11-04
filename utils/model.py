@@ -122,6 +122,9 @@ class RandomForestModel():
         self.RMSE = []
         self.RMAE = []
         self.R2 = []
+        self.RSR = []
+        self.MAPE = []
+        self.NMBE = []
         self.predictions = []
 
     def fit(self):
@@ -135,7 +138,6 @@ class RandomForestModel():
             self.MAPE.append(calculate_mape(y_test, predictions))
             self.NMBE.append(calcuate_nmbe(y_test, predictions))
             self.predictions.append([y_test, predictions])
-
 
     def get_results(self):
         return {
@@ -157,6 +159,9 @@ class SVMRegressor():
         self.RMSE = []
         self.RMAE = []
         self.R2 = []
+        self.RSR = []
+        self.MAPE = []
+        self.NMBE = []
         self.predictions = []
 
     def fit(self):
@@ -189,9 +194,11 @@ class XGBregressor():
     def __init__(self, inputs):
         self.inputs = inputs
         self.model = xgb.XGBRegressor(n_estimators=1000)
-        self.RMSE = []
         self.RMAE = []
         self.R2 = []
+        self.RSR = []
+        self.MAPE = []
+        self.NMBE = []
         self.predictions = []
 
     def fit(self):
@@ -261,6 +268,9 @@ class ANNregressor():
         self.RMSE = []
         self.RMAE = []
         self.R2 = []
+        self.RSR = []
+        self.MAPE = []
+        self.NMBE = []
         self.criterion = nn.MSELoss()
         self.predictions = []
 
