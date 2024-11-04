@@ -194,6 +194,7 @@ class XGBregressor():
     def __init__(self, inputs):
         self.inputs = inputs
         self.model = xgb.XGBRegressor(n_estimators=1000)
+        self.RMSE = []
         self.RMAE = []
         self.R2 = []
         self.RSR = []
