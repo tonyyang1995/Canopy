@@ -291,9 +291,9 @@ class ANNregressor():
         rmse = calculate_rmse(y_test, y_pred)
         rmae = calculate_rmae(y_test, y_pred)
         r2 = r2_score(y_test, y_pred)
-        rsr = calculate_RSR(y_test, predictions)
-        mape = calculate_mape(y_test, predictions)
-        nmbe = calcuate_nmbe(y_test, predictions)
+        rsr = calculate_RSR(y_test, y_pred)
+        mape = calculate_mape(y_test, y_pred)
+        nmbe = calcuate_nmbe(y_test, y_pred)
         return rmse, rmae, r2, y_pred, rsr, mape, nmbe
 
     def fit(self):
