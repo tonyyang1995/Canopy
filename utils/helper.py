@@ -39,7 +39,7 @@ def draw_heatmap(df, drop_column=["Data"]):
 def create_cross_validation(df, n_split=10):
     new_df = df.fillna(0)
     new_df.drop(columns=["Data"], inplace=True)
-    values =  df.to_numpy()
+    values =  new_df.to_numpy()
     x = values[:, :-1]
     y = values[:, -1]
     
