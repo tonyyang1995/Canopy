@@ -70,11 +70,12 @@ if __name__ == '__main__':
     # cmap options: ["YlGnBu", "Blues", "coolwarm", "BuPu", "Greens", "Oranges", "Reds", "Purples", "YlOrBr"]
     draw_heatmap(df, drop_column=["Data"], cmap='Greens')
     plt.title("Heatmap")
+    plt.savefig('results/heatmap.png')
     # plt.show()
 
     # 4. create cross validation
     print("step4: create cross validation datasets")
-    ten_fold_inputs = create_cross_validation(df, n_split=10, use_random=True, split_rate=0.1)
+    ten_fold_inputs = create_cross_validation(df, n_split=kfold, use_random=True, split_rate=split_rate)
     # print(len(ten_fold_inputs))
     
     # 5. Regression
