@@ -67,9 +67,7 @@ def calculate_adjusted_r2(actual, predicted, num_predictors=13):
 
 def calculate_RSR(actual, prediction):
     rmse = calculate_rmae(actual, prediction)
-    diff_sum = (actual - prediction) ** 2
-    diff_sum = np.sum(diff_sum)
-    scale = np.sqrt(diff_sum)
+    scale = np.std(actual)
     return rmse / scale
 
 def calculate_mape(actual, prediction):
