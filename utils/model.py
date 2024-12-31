@@ -15,6 +15,8 @@ import shap
 
 import matplotlib.pyplot as plt
 import pandas as pd
+import os
+import pickle as pkl
 
 def calculate_rmse(actual, predicted):
     # Ensure the inputs are numpy arrays
@@ -67,9 +69,7 @@ def calculate_adjusted_r2(actual, predicted, num_predictors=13):
 
 def calculate_RSR(actual, prediction):
     rmse = calculate_rmae(actual, prediction)
-    diff_sum = (actual - prediction) ** 2
-    diff_sum = np.sum(diff_sum)
-    scale = np.sqrt(diff_sum)
+    scale = np.std(actual)
     return rmse / scale
 
 def calculate_mape(actual, prediction):
@@ -81,8 +81,6 @@ def calcuate_nmbe(actual, prediction):
     actual = np.array(actual)
     prediction = np.array(prediction)
     return np.sum(prediction - actual) / np.sum(actual) * 100
-
-
 
 class RidgeRegressionModel():
     def __init__(self, inputs, column_names):
@@ -97,7 +95,15 @@ class RidgeRegressionModel():
         self.predictions = []
         self.shape_values = []
         self.feature_names = column_names
+        self.save_path = "results/ridge_regression/model"
+        if not os.path.exists(self.save_path):
+            os.makedirs(self.save_path, exist_ok=True)
 
+
+    def save(self):
+        with open(f"{self.save_path}/ridge_regression.pkl", "wb") as f:
+            pkl.dump(self.models, f)
+            
     def fit(self):
         for idx, (x_train, y_train, x_test, y_test) in enumerate(self.inputs):
             self.models[idx].fit(x_train, y_train)
@@ -115,11 +121,13 @@ class RidgeRegressionModel():
             xtest_df = pd.DataFrame(x_test, columns=self.feature_names)
             sv = self.explain(x_train_df, self.models[idx].predict, xtest_df, f"results/ridge_regression/shap_plot_{idx}.png")
             self.shape_values.append(sv)
+        
+        self.save()
 
     def get_results(self):
         return {
             "RMSE": self.RMSE,
-            "RMAE": self.RMAE,
+            "MAE": self.RMAE,
             "R2": self.R2,
             "RSR": self.RSR,
             "MAPE": self.MAPE,
@@ -153,6 +161,13 @@ class RandomForestModel():
         self.predictions = []
         self.shape_values = []
         self.feature_names = column_names
+        self.save_path = "results/random_forest_regression/model"
+        if not os.path.exists(self.save_path):
+            os.makedirs(self.save_path, exist_ok=True)
+        
+    def save(self):
+        with open(f"{self.save_path}/random_forest_regression.pkl", "wb") as f:
+            pkl.dump(self.models, f)
 
     def fit(self):
         for idx, (x_train, y_train, x_test, y_test) in enumerate(self.inputs):
@@ -171,6 +186,8 @@ class RandomForestModel():
             xtest_df = pd.DataFrame(x_test, columns=self.feature_names)
             sv = self.explain(x_train_df, self.models[idx].predict, xtest_df, f"results/random_forest_regression/shap_plot_{idx}.png")
             self.shape_values.append(sv)
+        
+        self.save()
 
     def get_results(self):
         return {
@@ -207,6 +224,13 @@ class SVMRegressor():
         self.predictions = []
         self.shape_values = []
         self.feature_names = column_names
+        self.save_path = "results/svm_regression/model"
+        if not os.path.exists(self.save_path):
+            os.makedirs(self.save_path, exist_ok=True)
+    
+    def save(self):
+        with open(f"{self.save_path}/svm_regression.pkl", "wb") as f:
+            pkl.dump(self.models, f)
 
     def fit(self):
         for idx, (x_train, y_train, x_test, y_test) in enumerate(self.inputs):
@@ -224,7 +248,8 @@ class SVMRegressor():
             xtest_df = pd.DataFrame(x_test, columns=self.feature_names)
             sv = self.explain(x_train_df, self.models[idx].predict, xtest_df, f"results/svm_regression/shap_plot_{idx}.png")
             self.shape_values.append(sv)
-
+        
+        self.save()
 
     def get_results(self):
         return {
@@ -261,6 +286,13 @@ class XGBregressor():
         self.predictions = []
         self.shape_values = []
         self.feature_names = column_names
+        self.save_path = "results/xgboost_regression/model"
+        if not os.path.exists(self.save_path):
+            os.makedirs(self.save_path, exist_ok=True)
+        
+    def save(self):
+        with open(f"{self.save_path}/xgboost_regression.pkl", "wb") as f:
+            pkl.dump(self.models, f)
 
     def fit(self):
         for idx, (x_train, y_train, x_test, y_test) in enumerate(self.inputs):
@@ -314,6 +346,13 @@ class ANNregressor():
         self.predictions = []
         self.shape_values = []
         self.feature_names = column_names
+        self.save_path = "results/ann_regression/model"
+        if not os.path.exists(self.save_path):
+            os.makedirs(self.save_path, exist_ok=True)
+
+    def save(self):
+        with open(f"{self.save_path}/ann_regression.pkl", "wb") as f:
+            pkl.dump(self.models, f)
 
     def fit(self):
         for idx, (x_train, y_train, x_test, y_test) in enumerate(self.inputs):
@@ -331,6 +370,8 @@ class ANNregressor():
             xtest_df = pd.DataFrame(x_test, columns=self.feature_names)
             sv = self.explain(x_train_df, self.models[idx].predict, xtest_df, f"results/ann_regression/shap_plot_{idx}.png")
             self.shape_values.append(sv)
+        
+        self.save()
 
     def get_results(self):
         return {

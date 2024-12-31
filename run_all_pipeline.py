@@ -3,11 +3,12 @@ import utils.helper as helper
 from utils.helper import read_excel
 from utils.helper import draw_hex_contour_plot, show_joint_plots, draw_heatmap
 import matplotlib.pyplot as plt
-from utils.helper import create_cross_validation, read_csv, draw_box_plot, draw_regplots
+from utils.helper import create_cross_validation, read_csv, draw_box_plot, draw_regplots, seed_everything
 import os
 import numpy as np
 import pandas as pd
 import seaborn as sns
+import pickle as pkl
 
 # ridge_regression results
 import utils.model
@@ -77,11 +78,17 @@ if __name__ == '__main__':
     print("step4: create cross validation datasets")
     ten_fold_inputs = create_cross_validation(df, n_split=kfold, use_random=True, split_rate=split_rate)
     # print(len(ten_fold_inputs))
+    input_dicts = {
+        "ten_fold_inputs": ten_fold_inputs,
+    }
+    with open("results/input_train_test.pkl", "wb") as f:
+        pkl.dump(input_dicts, f)
     
     # 5. Regression
     # 5.1 Ridge Regression
     print("step5.1: Ridge Regression")
     plt.close("all")
+    seed_everything(42)
     ridgeregression = RidgeRegressionModel(ten_fold_inputs, column_names[1:13])
     ridgeregression.fit()
     ridge_regression_results = ridgeregression.get_results()
@@ -101,6 +108,7 @@ if __name__ == '__main__':
     # 5.2 RF regression results
     print("step5.2: RF Regression")
     plt.close("all")
+    seed_everything(42)
     RFregression = RandomForestModel(ten_fold_inputs, column_names[1:13])
     RFregression.fit()
     rf_regression_results = RFregression.get_results()
@@ -120,6 +128,7 @@ if __name__ == '__main__':
     # 5.3 svm regression results
     print("step5.3: SVM Regression")
     plt.close("all")
+    seed_everything(42)
     SVMregression = SVMRegressor(ten_fold_inputs, column_names[1:13])
     SVMregression.fit()
     SVM_regression_results = SVMregression.get_results()
@@ -139,6 +148,7 @@ if __name__ == '__main__':
     # 5.4 xgb regression results
     print("step5.4: XGB Regression")
     plt.close("all")
+    seed_everything(42)
     XGBregression = XGBregressor(ten_fold_inputs, column_names[1:13])
     XGBregression.fit()
     XGB_regression_results = XGBregression.get_results()
@@ -158,6 +168,7 @@ if __name__ == '__main__':
     # 5.5 ANN regression results
     print("step5.5: ANN Regression")
     plt.close("all")
+    seed_everything(42)
     ANNregression = ANNregressor(ten_fold_inputs, column_names[1:13])
     ANNregression.fit()
     ANN_regression_results = ANNregression.get_results()
@@ -192,7 +203,7 @@ if __name__ == '__main__':
     # make sure the order match the name lists!!!
     result_lists = [ridge_result_summary, ann_result_summary, rf_result_summary, xgb_result_summary]
     name_lists = ["RIDGE","ANN", "RF", "XGB"]
-    metric_lists = ["RMSE", "RMAE", "R2", "RSR", "MAPE", "NMBE"]
+    metric_lists = ["RMSE", "MAE", "R2", "RSR", "MAPE", "NMBE"]
     plt.close("all")
     df = draw_box_plot(result_lists, name_lists, metric_lists, box_plot_colors=box_plot_colors)
 

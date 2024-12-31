@@ -76,7 +76,7 @@ def summary2df(summary, name='ridge'):
     r2 = list(values[:, 3])
     rsr = list(values[:, 4])
     mape = list(values[:, 5])
-    nmbe = list(values[:, 6])
+    nmbe = list(abs(values[:, 6]))
     method = [name] * len(rmse)
     return method, rmse, rmae, r2, rsr, mape, nmbe
 
@@ -102,7 +102,7 @@ def draw_box_plot(result_lists, name_lists, metric_lists, box_plot_colors=sns.co
 
     df["method"] = methods
     df["RMSE"] = rmses
-    df["RMAE"] = rmaes
+    df["MAE"] = rmaes
     df["R2"] = r2s
     df["RSR"] = rsrs
     df["MAPE"] = mapes
@@ -163,3 +163,7 @@ def draw_regplots(save_paths, titles, folds=10, facecolor="#FF8C94", patchcolor=
     for save_path, title in zip(save_paths, titles):
         draw_regplot(save_path, title, folds=folds, facecolor=facecolor, patchcolor=patchcolor, alpha=alpha, xlim=xlim, ylim=ylim)
 
+def seed_everything(seed=42):
+    np.random.seed(seed)
+    os.environ['PYTHONHASHSEED'] = str(seed)
+    np.random.seed(seed)
