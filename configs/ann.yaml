@@ -1,0 +1,14 @@
+Type: ANN
+Dataset:
+  data_path: "dataset/input_train_test.pkl"
+  additional_test_data_path: "dataset/Concrete_Data_Test_padding.xlsx"
+  save_path: "results/ann_regression/"
+  column_names: ['Cement', 'Water', 'FA', 'CA', 'HRWR', 'FlyAsh', 'Slag', 'SF', 'nano-TiO2', 'nano-SiO2', 'ConcreteAge', 'TempdegC']
+Model:
+  hidden_layer_sizes: [32, 128, 128]
+  max_iter: 1000
+  batch_size: 64
+  tol: 1.0e-6
+
+seed: 42
+k_fold: 10

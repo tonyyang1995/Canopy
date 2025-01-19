@@ -34,7 +34,8 @@ def show_joint_plots(save_path, ax):
 
 def draw_heatmap(df, drop_column=["Data"], cmap='coolwarm'):
     new_df = df.fillna(0)
-    new_df.drop(columns=drop_column, inplace=True)
+    if drop_column is not None:
+        new_df.drop(columns=drop_column, inplace=True)
     corr_matrix = new_df.corr()
     sns.heatmap(corr_matrix, annot=True, cmap=cmap)
 
