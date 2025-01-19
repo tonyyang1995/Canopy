@@ -1,0 +1,9 @@
+Type: RANDOM_FOREST
+Dataset:
+  data_path: "dataset/input_train_test.pkl"
+  additional_test_data_path: "dataset/Concrete_Data_Test_padding.xlsx"
+  save_path: "results/random_forest_regression/"
+  column_names: ['Cement', 'Water', 'FA', 'CA', 'HRWR', 'FlyAsh', 'Slag', 'SF', 'nano-TiO2', 'nano-SiO2', 'ConcreteAge', 'TempdegC']
+
+seed: 42
+k_fold: 10
