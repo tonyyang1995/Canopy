@@ -17,7 +17,7 @@ class XGBregressor():
         
         n_estimators = configs["Model"]["n_estimators"]
         k_fold = configs["k_fold"]
-        self.models = [xgb.XGBRegressor(n_estimators=n_estimators)] * k_fold
+        self.models = [xgb.XGBRegressor(n_estimators=n_estimators) for i in range(k_fold)]
         self.RMSE = []
         self.RMAE = []
         self.R2 = []
@@ -112,10 +112,10 @@ class XGBregressor():
             nmbe_mean.append(nmbe)
         
         return {
-            "RMSE": np.mean(rmse_mean), 
-            "RMAE": np.mean(rmae_mean), 
-            "R2": np.mean(r2_mean), 
-            "RSR": np.mean(rsr_mean), 
-            "MAPE": np.mean(mape_mean), 
-            "NMBE": np.mean(nmbe_mean)
+            "RMSE": rmse_mean, 
+            "RMAE": rmae_mean, 
+            "R2": r2_mean, 
+            "RSR": rsr_mean, 
+            "MAPE": mape_mean, 
+            "NMBE": nmbe_mean
         }

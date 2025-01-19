@@ -21,7 +21,7 @@ class RidgeRegressionModel():
 
         k_fold = configs["k_fold"]
 
-        self.models = [linear_model.RidgeCV(alphas=np.logspace(start, stop, num))] * k_fold
+        self.models = [linear_model.RidgeCV(alphas=np.logspace(start, stop, num)) for i in range(k_fold)]
         self.RMSE = []
         self.RMAE = []
         self.R2 = []
@@ -122,10 +122,10 @@ class RidgeRegressionModel():
             nmbe_mean.append(nmbe)
         
         return {
-            "RMSE": np.mean(rmse_mean), 
-            "RMAE": np.mean(rmae_mean), 
-            "R2": np.mean(r2_mean), 
-            "RSR": np.mean(rsr_mean), 
-            "MAPE": np.mean(mape_mean), 
-            "NMBE": np.mean(nmbe_mean)
+            "RMSE": rmse_mean, 
+            "RMAE": rmae_mean, 
+            "R2": r2_mean, 
+            "RSR": rsr_mean, 
+            "MAPE": mape_mean, 
+            "NMBE": nmbe_mean
         }

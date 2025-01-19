@@ -24,7 +24,7 @@ class ANNregressor():
         batch_size = configs["Model"]["batch_size"]
         k_fold = configs["k_fold"]
 
-        self.models = [MLPRegressor(hidden_layer_sizes=hidden_layer_sizes, max_iter=max_iter, random_state=random_state, tol=tol, batch_size=batch_size)] * k_fold
+        self.models = [MLPRegressor(hidden_layer_sizes=hidden_layer_sizes, max_iter=max_iter, random_state=random_state, tol=tol, batch_size=batch_size) for i in range(k_fold)]
         self.RMSE = []
         self.RMAE = []
         self.R2 = []
@@ -121,12 +121,11 @@ class ANNregressor():
             nmbe_mean.append(nmbe)
         
         return {
-            "RMSE": np.mean(rmse_mean), 
-            "RMAE": np.mean(rmae_mean), 
-            "R2": np.mean(r2_mean), 
-            "RSR": np.mean(rsr_mean), 
-            "MAPE": np.mean(mape_mean), 
-            "NMBE": np.mean(nmbe_mean)
+            "RMSE": rmse_mean, 
+            "RMAE": rmae_mean, 
+            "R2": r2_mean, 
+            "RSR": rsr_mean, 
+            "MAPE": mape_mean, 
+            "NMBE": nmbe_mean
         }
-
         

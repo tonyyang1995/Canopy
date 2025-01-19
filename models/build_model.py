@@ -84,9 +84,8 @@ def analysis_shap_value(configs, model):
         feature_importance["importance"] = np.abs(shap_values).mean(0)
         fig_save_path = f"{save_path}/feature_importance_{i}_pie.png"
         
-        norm = mpl.colors.Normalize(vmin=feature_importance["importance"].min(), vmax=feature_importance["importance"].max())
-        cmap = plt.get_cmap("viridis")
-        colors = [cmap(norm(value)) for value in feature_importance["importance"]]
+        cmap = plt.get_cmap("tab20")
+        colors = [cmap(idx) for idx, value in enumerate(feature_importance["importance"])]
 
         plt.pie(feature_importance["importance"], labels=feature_importance["feature"], autopct='%1.1f%%', colors=colors)
         plt.title("feature importance of ann regression")
