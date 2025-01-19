@@ -1,0 +1,15 @@
+# Predicting Compressive Strength of Concrete with SCMs and Nanoparticles using Machine Learning Approaches![image](https://github.com/user-attachments/assets/1cf22720-ea36-4a44-a6c5-12f58d984ecd)
+Nanomaterials and supplementary cementitious materials (SCMs) are typically used together in efforts to enhance the performance of concrete and mitigating the environmental impact of concrete construction. Compressive strength, being the most well-measured mechanical property of concrete, required an excessive amount of resources and time. To address such issue, this study proposes using several machine learning algorithms to predict the compressive strength of concrete containing nanoparticles (i.e., nano-TiO2 and nano-SiO2) and SCMs (i.e., fly ash, slag, and silica fume). A database composed of twelve input variables is utilized to train four different machine leaning models, including Ridge Regression (Ridge), Artificial Neural Network (ANN), Random Forest (RF), and Extreme Gradient Boost (XGB). Furthermore, the performance of the trained machine leaning models are evaluated by five criteria, including Root Mean Square Error (RMSE), Mean Absolute Error (MAE), coefficient of correlation (R2), Normalized Mean Bias Error (NMBE), and Mean Absolute Percentage Error (MAPE). Among the four models studied, XGB (R2=0.93) model presents the highest performance in the prediction of compressive strength of concrete. Shapley Additive exPlanations (SHAP) method is adapted to perform the feature importance analysis using XGB model, providing a more comprehensive explanatory information on identifying the most influential inputs and quantifying the impact of input variables on the compressive strength of concrete. In the end, this study provides an open-source tool Canopy for concrete researchers in mix design optimization and data analysis.![image](https://github.com/user-attachments/assets/b34e0968-3acd-45a7-9181-8e2410d76a4e)
+
+## Requirements
+Required modules can be installed via requirements.txt under the project root
+```
+pip install -r requirements.txt
+```
+
+```
+seaborn==0.13.2
+pandas==2.2.2
+numpy==1.26.4
+scikit-learn==1.5.1
+```
