@@ -128,6 +128,8 @@ def convert_str2_list(list_str):
 
 def draw_regplot(save_path, title, folds=10, facecolor="#FF8C94", patchcolor='red', alpha=0.3, xlim=(0,120), ylim=(0,120)):
     results = read_csv(f"{save_path}/results.csv")
+    gts_all = []
+    preds_all = []
     for idx in range(0, folds):
         plt.close("all")
         res = results[f'{idx}_fold']
@@ -135,8 +137,12 @@ def draw_regplot(save_path, title, folds=10, facecolor="#FF8C94", patchcolor='re
         gts = convert_str2_list(gts)
         preds = convert_str2_list(pred)
         
+        gts_all.extend(gts)
+        preds_all.extend(preds)
+
         gts = np.array(gts)
         preds = np.array(preds)
+        
         df_values = np.stack([gts, preds], axis=1)
         df = pd.DataFrame(df_values, columns=["GroundTruth", "Prediction"])
         plot = sns.lmplot(data=df, x="GroundTruth", y="Prediction", legend=True, markers=['x'], scatter_kws={"s":3})
@@ -159,6 +165,34 @@ def draw_regplot(save_path, title, folds=10, facecolor="#FF8C94", patchcolor='re
         plt.title(title)
         
         plt.savefig(f'{save_path}/lmplot_{idx}_fold.png')
+    
+    # draw all lm plots
+    plt.close("all")
+    gts = np.array(gts_all)
+    preds = np.array(preds_all)
+    
+    df_values = np.stack([gts, preds], axis=1)
+    df = pd.DataFrame(df_values, columns=["GroundTruth", "Prediction"])
+    plot = sns.lmplot(data=df, x="GroundTruth", y="Prediction", legend=True, markers=['x'], scatter_kws={"s":3})
+    
+    ax = plot.axes[0, 0]  # Get the axis from lmplot
+    sns.regplot(x="GroundTruth", y="Prediction", data=df, scatter=False, ci=95, line_kws={'color':'black'}, 
+            ax=ax, 
+            scatter_kws={'s': 3}, 
+            fit_reg=True)
+    ax.collections[1].set_facecolor(facecolor)
+    ax.collections[1].set_alpha(alpha)  # Adjust transparency if needed
+    
+    red_patch = mpatches.Patch(color=patchcolor, alpha=alpha, label="95% Confidence Interval")
+    plt.legend(handles=[red_patch], loc='upper left', frameon=True)
+
+    plt.tight_layout()
+    if (xlim is not None) and (ylim is not None):
+        plt.xlim(xlim)
+        plt.ylim(ylim)
+    plt.title(title)
+    
+    plt.savefig(f'{save_path}/lmplot_all.png')
 
 def draw_regplots(save_paths, titles, folds=10, facecolor="#FF8C94", patchcolor='red', alpha=0.3, xlim=(0,120), ylim=(0,120)):
     for save_path, title in zip(save_paths, titles):
