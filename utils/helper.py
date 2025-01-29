@@ -145,7 +145,9 @@ def draw_regplot(save_path, title, folds=10, facecolor="#FF8C94", patchcolor='re
         
         df_values = np.stack([gts, preds], axis=1)
         df = pd.DataFrame(df_values, columns=["GroundTruth", "Prediction"])
-        plot = sns.lmplot(data=df, x="GroundTruth", y="Prediction", legend=True, markers=['x'], scatter_kws={"s":3})
+        plot = sns.lmplot(data=df, x="GroundTruth", y="Prediction", legend=True, markers=['x'], scatter_kws={"s":10})
+        # plot = sns.lmplot(data=df, x="GroundTruth", y="Prediction", legend=True, markers=['*'])
+
         
         ax = plot.axes[0, 0]  # Get the axis from lmplot
         sns.regplot(x="GroundTruth", y="Prediction", data=df, scatter=False, ci=95, line_kws={'color':'black'}, 
@@ -178,7 +180,7 @@ def draw_regplot(save_path, title, folds=10, facecolor="#FF8C94", patchcolor='re
     ax = plot.axes[0, 0]  # Get the axis from lmplot
     sns.regplot(x="GroundTruth", y="Prediction", data=df, scatter=False, ci=95, line_kws={'color':'black'}, 
             ax=ax, 
-            scatter_kws={'s': 3}, 
+            scatter_kws={'s': 5}, 
             fit_reg=True)
     ax.collections[1].set_facecolor(facecolor)
     ax.collections[1].set_alpha(alpha)  # Adjust transparency if needed
