@@ -10,9 +10,39 @@ Required modules can be installed via requirements.txt under the project root
 pip install -r requirements.txt
 ```
 
+## Tutorial for Canopy
+1. Data processing: [here](https://github.com/tonyyang1995/Canopy/blob/main/Preprocess_data.ipynb)
+2. Train Canopy: [here](https://github.com/tonyyang1995/Canopy/blob/main/train.ipynb)
+3. Explain Canopy: [here](https://github.com/tonyyang1995/Canopy/blob/main/Explain.ipynb)
+
+## Data structure
 ```
-seaborn==0.13.2
-pandas==2.2.2
-numpy==1.26.4
-scikit-learn==1.5.1
+├── requirement.txt
+├── dataset
+│      ├── your_own_data.xlsx
+│      ├── Concrete_Data_test.xlsx
+
+```
+
+After Data processing, you should have the following pickle file. The pickle file will split the dataset to 10 cross-validation subsets.
+```
+├── requirement.txt
+├── dataset
+│      ├── your_own_data.xlsx
+│      ├── Concrete_Data_test.xlsx
+│      ├── input_train_test.pkl
+```
+## Results directory
+```
+├── results
+│      ├── xgboost_regression
+│          ├── lmplot.png
+│          ├── shap_plot.png
+│          ├── wo_nano_scatter.png
+│          ├── result.csv
+│          ├── result_summary.csv
+│          ├── xgboost_regression.pkl
+│          ├── 。。。
+|      ...
+│      ├── ann_regression
 ```
